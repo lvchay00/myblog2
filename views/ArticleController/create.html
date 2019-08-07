@@ -1,0 +1,105 @@
+    
+<div class="row">
+  <div class="col-md-9">
+      <div class="panel-body">
+          {{template "../components/flash_error.tpl" .}}
+          <form method="post" action="/article/create">
+          <div >
+          <a href="/">主页</a> / 发布文章
+          </div>
+            <div class="form-group">
+              <label for="title">标题</label>
+               <input style="width:500pt;height:30pt" type="text" class="form-control" id="title" name="title" placeholder="标题">
+            </div>
+
+          <div class="container">
+            <label for="title">分类</label>
+            	<div class="row clearfix">
+            		<div class="col-md-2 column">
+                        <select style="width:100pt;height:30pt" name="sid" id="sid" class="form-control">
+            				    {{range $k ,$v := .Sections}}                            
+            		                {{if eq $v.Name ""}}
+            		                   <option value="{{$v.Id}}" selected>{{$v.Name}}</option>   
+            					            {{else}}
+                                   <option value="{{$v.Id}}" >{{$v.Name}}</option>
+                                  {{end}}            
+                       	  {{end}} 
+            
+            		       </select>	
+            		</div>
+            		<div class="col-md-2 column">
+            
+            			           <select style="width:100pt;height:30pt" name="sid1" id="sid1" class="form-control" >
+            				    {{range $k ,$v := .Sections}}
+                                  {{if eq $v.Name ""}}
+            		                   <option value="{{$v.Id}}" selected>{{$v.Name}}</option>   
+            					            {{else}}
+                                   <option value="{{$v.Id}}" >{{$v.Name}}</option>
+                                  {{end}}
+                       	        {{end}}  
+                                  
+            		           </select>	
+            
+            		</div>
+            		<div class="col-md-2 column">
+            					<select style="width:100pt;height:30pt" name="sid2" id="sid2" class="form-control">
+            				    {{range $k ,$v := .Sections}}
+                                  
+            		                 {{if eq $v.Name ""}}
+            		                   <option value="{{$v.Id}}" selected>{{$v.Name}}</option>   
+            					            {{else}}
+                                   <option value="{{$v.Id}}" >{{$v.Name}}</option>
+                                  {{end}}  
+            					 
+                       	        {{end}}    
+            		           </select>	
+            
+            		</div>
+            		<div class="col-md-2 column">
+            
+            						 <select style="width:100pt;height:30pt" name="sid3" id="sid3" class="form-control">
+            				     {{range $k ,$v := .Sections}}
+                                     		                 {{if eq $v.Name ""}}
+            		                   <option value="{{$v.Id}}" selected>{{$v.Name}}</option>   
+            					            {{else}}
+                                   <option value="{{$v.Id}}" >{{$v.Name}}</option>
+                                  {{end}}                					 
+                       	  {{end}}    
+            		         </select>		
+            		</div>
+
+	          </div>
+          </div>  
+  
+ 
+         <div class="form-group">
+             <label for="title">内容</label>
+             <textarea  id="content" name="content" style="width:100%; height: 800px;" ></textarea >
+
+             <script type="text/javascript" src="/static/wangEditor-2/dist/js/lib/jquery-1.10.2.min.js"></script>
+             <script type="text/javascript" src="/static/wangEditor-2/dist/js/wangEditor.js"></script>
+             <script type="text/javascript">
+                 var editor = new wangEditor('content');
+                 // 上传图片
+                 editor.config.uploadImgUrl = '/up';
+                 editor.config.uploadHeaders='/up';
+                 editor.onchange = function () {
+                     console.log(this.$txt.html());
+                 };
+                 editor.create();
+             </script>
+            
+             </div>
+                   <button type="submit" class="btn btn-default">发布</button>
+          </div>
+   </div>
+  <div class="col-md-3">
+      {{template "components/welcome.tpl" .}}
+      {{if .IsLogin}}
+      {{template "components/article_create.tpl" .}}
+      {{end}}
+    
+      {{template "components/otherbbs.tpl" .}}
+  </div>
+</div>
+

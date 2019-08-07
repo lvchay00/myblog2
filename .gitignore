@@ -1,0 +1,4 @@
+conf/ 
+*.exe
+*.out
+*.log 

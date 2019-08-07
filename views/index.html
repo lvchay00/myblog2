@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-md-9">
+  
+    <div  class="panel panel-success">
+       <div   class="panel-heading ">  
+	    <h4>
+        <ul style = "position:relative;margin-left:2%;margin-right:2%"  class="nav nav-pills">		
+          <li id="tab_0"><a href="/?tab=all">全部</a></li>
+          {{range .Sections}}
+           {{if eq .Id $.S}}
+          <li id="tab_{{.Id}}" class="active" ><a href="/?s={{.Id}}">{{.Name}}</a></li>
+          {{else}}
+           <li id="tab_{{.Id}}" ><a href="/?s={{.Id}}">{{.Name}}</a></li>
+          {{end}}
+	        {{end}}			  
+          {{if $.IsLogin}}
+          <li class="nav-item">
+            <a class="nav-link" href="/AddClass">增加/删除分类</a>
+          </li> 
+           {{end}}		   
+          </ul>  
+	     </h4> 
+        </div> 
+      <!--分割-->
+      <div class="panel-body">
+         {{range .articles}}
+              <div  class="title">
+		       	    <h5 style = "position:relative;margin-left:2%;margin-right:2%"><a href="/article/{{.Id}}">{{.Title}}</a></h5>             
+              </div>                    
+    		        <h3> </h3>
+                
+      		       <div style = "position:relative;margin-left:2%;margin-right:2%">
+                  {{str2html (.Content | markdown)}} 	
+                   <!-- <a href="/article/{{.Id}}">阅读更多</a>   	 -->
+                   <a class="btn" href="/article/{{.Id}}">阅读更多</a>
+                 </div>   
+                  		
+                 <p style = "position:relative;margin-left:2%;margin-right:2%" class="gray">		
+                  {{range $k,$v := .Section}}
+                  <span class="hidden-sm hidden-xs"><a href="/?s={{$k}}">{{$v.Name}}</a></span>
+      				    <span>.</span>
+      			      {{end}}
+
+			            {{if $.IsLogin}}
+                  <span><a href="/user/{{.User.Username}}">{{.User.Username}}</a></span>
+			            <span class="hidden-sm hidden-xs">.</span>
+			            {{end}}       
+
+                  <span class="hidden-sm hidden-xs">{{.ReplyCount}}个回复</span>
+                  <span class="hidden-sm hidden-xs">.</span>
+                  <span class="hidden-sm hidden-xs">{{.View}}次浏览</span>
+                  <span>.</span>
+                  <span>{{.InTime | timeago}}</span>
+                 </p>        
+                      
+                <div style = " border: 5px solid;border-color:#989898"></div>
+        {{end}}
+        
+          <ul id="page">  </ul>       
+		    {{str2html .pagebar}}
+     </div>
+      
+    </div>
+  
+  
+  </div>
+ 
+<!--分割-->
+   <div class="col-md-3">
+      {{template "components/welcome.tpl" .}}
+      {{if .IsLogin}}
+      {{template "components/article_create.tpl" .}}
+      {{end}}
+    
+      {{template "components/otherbbs.tpl" .}}
+  </div>
+</div>
