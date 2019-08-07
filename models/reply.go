@@ -15,7 +15,6 @@ type Reply struct {
 	InTime  time.Time `orm:"auto_now_add;type(datetime)"`
 }
 
-//通过id 查找回复
 func FindReplyById(id int) Reply {
 	o := orm.NewOrm()
 	var reply Reply
@@ -23,7 +22,6 @@ func FindReplyById(id int) Reply {
 	return reply
 }
 
-//通过文章查找回复
 func FindReplyByArticle(article *Article) []*Reply {
 	o := orm.NewOrm()
 	var reply Reply
@@ -32,7 +30,6 @@ func FindReplyByArticle(article *Article) []*Reply {
 	return replies
 }
 
-//通过用户查找回复
 func FindReplyByUser(user *User, limit int) []*Reply {
 	o := orm.NewOrm()
 	var reply Reply
@@ -41,14 +38,12 @@ func FindReplyByUser(user *User, limit int) []*Reply {
 	return replies
 }
 
-//保存回复
 func SaveReply(reply *Reply) int64 {
 	o := orm.NewOrm()
 	id, _ := o.Insert(reply)
 	return id
 }
 
-//通过文章删除回复
 func DeleteReplyByArticle(article *Article) {
 	o := orm.NewOrm()
 	var reply Reply
@@ -59,13 +54,11 @@ func DeleteReplyByArticle(article *Article) {
 	}
 }
 
-//删除回复
 func DeleteReply(reply *Reply) {
 	o := orm.NewOrm()
 	o.Delete(reply)
 }
 
-//通过用户删除回复
 func DeleteReplyByUser(user *User) {
 	o := orm.NewOrm()
 	o.Raw("delete form reply where user_id = ?", user.Id).Exec()

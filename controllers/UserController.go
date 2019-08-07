@@ -12,7 +12,7 @@ type UserController struct {
 	beego.Controller
 }
 
-//登录页 /login  get
+// /login  get
 func (c *UserController) LoginPage() {
 	IsLogin, _ := filters.IsLogin(c.Ctx)
 	if IsLogin {
@@ -26,7 +26,7 @@ func (c *UserController) LoginPage() {
 	}
 }
 
-//验证登录 /login post
+// /login post
 func (c *UserController) Login() {
 	flash := beego.NewFlash()
 	username, password := c.Input().Get("username"), c.Input().Get("password")
@@ -41,7 +41,7 @@ func (c *UserController) Login() {
 	}
 }
 
-//注册页 /register  get
+// /register  get
 func (c *UserController) RegisterPage() {
 	IsLogin, _ := filters.IsLogin(c.Ctx)
 	if IsLogin {
@@ -54,7 +54,7 @@ func (c *UserController) RegisterPage() {
 	}
 }
 
-//验证注册 /register post
+// /register post
 func (c *UserController) Register() {
 	flash := beego.NewFlash()
 	username, password := c.Input().Get("username"), c.Input().Get("password")
@@ -67,7 +67,6 @@ func (c *UserController) Register() {
 		flash.Store(&c.Controller)
 		c.Redirect("/register", 302)
 	} else {
-		//使用UUID 生成token
 		var token = uuid.Rand().Hex()
 		user := models.User{Username: username, Password: utils.Md5([]byte(password)), Token: token}
 		models.SaveUser(&user)
@@ -76,13 +75,13 @@ func (c *UserController) Register() {
 	}
 }
 
-//退出  /loginout
+// /loginout
 func (c *UserController) Logout() {
 	filters.DeleteCookie(c.Controller.Ctx)
 	c.Redirect("/", 302)
 }
 
-//关于 /about
+// /about
 func (c *UserController) About() {
 	c.Data["IsLogin"], c.Data["UserInfo"] = filters.IsLogin(c.Controller.Ctx)
 	c.Data["PageTitle"] = "关于"

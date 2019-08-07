@@ -99,11 +99,8 @@ func FindArticleById_2(id int) Article {
 	return Article
 }
 
-//根据类型找出所有的文章
 func FindArticleByArticleSectionsUsingSection(p int, size int, section_id int) (int64, []Article) {
-	// fmt.Println("测试开始")
-	// FindArticleUsingSection(p, size, section_id)
-	// fmt.Println("测试结束")
+
 	o := orm.NewOrm()
 	var article Article
 	var articles []Article
@@ -138,7 +135,7 @@ func FindArticleByArticleSectionsUsingSection(p int, size int, section_id int) (
 				int_str, _ := strconv.Atoi(value)
 				if int_str != 0 {
 					article = (FindArticleById(int_str))
-				//	article.Section = FindSectionByArticle(int64(int_str))
+					//	article.Section = FindSectionByArticle(int64(int_str))
 					articles = append(articles, article)
 					total = total + 1
 				}
@@ -148,7 +145,6 @@ func FindArticleByArticleSectionsUsingSection(p int, size int, section_id int) (
 	return total, articles
 }
 
-//根据类型找出所有的文章
 func FindArticleUsingSection(p int, size int, section_id int64) {
 	o := orm.NewOrm()
 
