@@ -1,4 +1,4 @@
-conf/ 
+conf/*conf 
 *.exe
 *.out
 *.log 
